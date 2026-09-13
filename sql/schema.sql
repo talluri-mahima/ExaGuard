@@ -1,0 +1,38 @@
+-- ExaGuard schema for Exasol Personal
+CREATE SCHEMA IF NOT EXISTS EXAGUARD;
+OPEN SCHEMA EXAGUARD;
+
+CREATE OR REPLACE TABLE accounts (
+    ACCT_ID          VARCHAR(20),
+    CUSTOMER_NAME    VARCHAR(200),
+    OPENED_TS        TIMESTAMP,
+    KYC_TIER         VARCHAR(20),
+    COUNTRY          VARCHAR(10),
+    DEVICE_FP        VARCHAR(100),
+    EMAIL            VARCHAR(200),
+    PHONE            VARCHAR(50),
+    RISK_BASE        DECIMAL(5,2),
+    PROFILE_VEC      VARCHAR(1000)
+);
+
+CREATE OR REPLACE TABLE transactions (
+    TXN_ID           VARCHAR(20),
+    TS               TIMESTAMP,
+    SRC_ACCT         VARCHAR(20),
+    DST_ACCT         VARCHAR(20),
+    AMOUNT           DECIMAL(18,2),
+    TXN_TYPE         VARCHAR(30),
+    CHANNEL          VARCHAR(30),
+    IS_FLAGGED_LEGACY DECIMAL(1,0),
+    IS_FRAUD_LABEL   DECIMAL(1,0)
+);
+
+CREATE OR REPLACE TABLE evidence (
+    EVIDENCE_ID      VARCHAR(50),
+    RING_ID          VARCHAR(20),
+    TYPOLOGY         VARCHAR(50),
+    ACCOUNT_LIST     VARCHAR(2000),
+    TXN_LIST         VARCHAR(4000),
+    HASH             VARCHAR(64),
+    CREATED_TS       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
